@@ -20,8 +20,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import Controller.ClienteControllers;
+import Controllres.ClienteControllers;
+import DAO.ClienteDAO;
 import Model.Cliente;
+
 import javax.swing.JFormattedTextField;
 
 @SuppressWarnings("unused")
@@ -421,7 +423,7 @@ public class UpdateCliente extends JFrame {
 	
 	public void atualizar() {
 		
-		ClienteControllers dao = new ClienteControllers();
+
 		
 		Cliente cliente = new Cliente.ClienteBuilder()
 				.id(Integer.parseInt(textFieldID.getText()))
@@ -439,7 +441,7 @@ public class UpdateCliente extends JFrame {
 				.observacao(textFieldObservacao.getText())
 				.criarCliente();
 		
-		dao.update(cliente);
+		    ClienteControllers.atualizar(cliente);
 		
 		JOptionPane.showMessageDialog(null, "Cliente atualizado com sucessso!");
 		

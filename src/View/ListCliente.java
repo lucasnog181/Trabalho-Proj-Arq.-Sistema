@@ -21,9 +21,8 @@ import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 
-import Controller.ClienteControllers;
+import Controllres.ClienteControllers;
 import Model.Cliente;
-
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -328,7 +327,11 @@ public class ListCliente extends JFrame {
 							dialogButton);
 
 					if (dialogResult == 0) {
-						delete();
+						
+						int row = table.getSelectedRow();
+						Integer id = (Integer) table.getValueAt(row, 0);
+						
+						delete(id);
 						JOptionPane.showMessageDialog(null, "Cliente excluido com sucesso!");
 
 					} else {
@@ -351,17 +354,16 @@ public class ListCliente extends JFrame {
 	
 	
 	public void LoadDataTable() {
-		ClienteControllers dao = new ClienteControllers();
 		
 		try {
 			@SuppressWarnings("unused")
-			List<Cliente> lista = dao.getCliente();
+			List<Cliente> lista = ClienteControllers.procurar("");
 			DefaultTableModel model = (DefaultTableModel) table.getModel();
 			if(model.getRowCount() > 0) {
 				model.setRowCount(0);
 			}
 			
-			for(Cliente c: dao.getCliente()) {
+			for(Cliente c: ClienteControllers.procurar("")) {
 				Object [] object = new Object[13];
 				object[0] = c.getId();
 				object[1] = c.getNome();
@@ -385,9 +387,8 @@ public class ListCliente extends JFrame {
 	}
 	
 	
-	public void delete() {
-		ClienteControllers dao = new ClienteControllers();
-		
+	public void delete(int id) {
+
 		Cliente cliente = new Cliente.ClienteBuilder()
 				.id(55).nome("")
 				.cpf("")
@@ -404,7 +405,7 @@ public class ListCliente extends JFrame {
 				.criarCliente();
 		
 		cliente.setId((int) table.getValueAt(table.getSelectedRow(), 0));
-		dao.delete(cliente.getId());
+		ClienteControllers.excluir(id);
 		
 		LoadDataTable();
 		
@@ -413,17 +414,16 @@ public class ListCliente extends JFrame {
 	
 	
 	public void SearchName(String NomeProduto) {
-		ClienteControllers dao = new ClienteControllers();
 		try {
 			
 			@SuppressWarnings("unused")
-			List<Cliente> lista = dao.getCliente();
+			List<Cliente> lista = ClienteControllers.procurar("");
 			DefaultTableModel model = (DefaultTableModel) table.getModel();
 			if(model.getRowCount() > 0) {
 				model.setRowCount(0);
 			}
 			
-			for(Cliente c : dao.buscarPorNome(NomeProduto)) {
+			for(Cliente c : ClienteControllers.procurar(NomeProduto)) {
 				Object [] object = new Object[13];
 				object[0] = c.getId();
 				object[1] = c.getNome();
@@ -439,7 +439,7 @@ public class ListCliente extends JFrame {
 				object[11] = c.getNumero();
 				object[12] = c.getObservacao();
 
-				model.addRow(object);
+				 model.addRow(object);
 			}
 			
 		} catch (Exception e) {

@@ -1,4 +1,4 @@
-package Controller;
+package DAO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,13 +6,13 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import Connection.SingletonConnection;
+import Database.SingletonConnection;
 import Model.Funcionario;
 
 
-public class FuncionarioControllers {
+public class FuncionarioDAO {
 
-	public void save(Funcionario funcionario) {
+	public static void save(Funcionario funcionario) {
 
 		String sql = "INSERT INTO Funcionarios (nome, cpf , data_contratacao , salario , cargo )  VALUES (?,?,?,?,?)";
 
@@ -50,7 +50,7 @@ public class FuncionarioControllers {
 	}
 	
 	
-	public List<Funcionario> getFuncionario() {
+	public static List<Funcionario> getFuncionario() {
 		
 	String sql = "select funcionarios.id, funcionarios.nome, funcionarios.cpf, funcionarios.data_contratacao, funcionarios.cargo, funcionarios.salario from funcionarios ORDER BY id ASC, nome ASC";
 		
@@ -110,7 +110,7 @@ public class FuncionarioControllers {
 	
 	
 	
-	public void update(Funcionario funcionario) {
+	public static void update(Funcionario funcionario) {
 		String sql = "UPDATE Funcionarios SET nome=?, cpf=?, data_contratacao=?, salario=?, cargo=?  WHERE id=?";
 		
 		Connection connection = null;
@@ -152,7 +152,7 @@ public class FuncionarioControllers {
 	
 	
 	
-	public void delete(int id) {
+	public static void delete(int id) {
 		String sql = "DELETE FROM Funcionarios WHERE id=?";
 		
 		Connection connection = null;
@@ -185,7 +185,7 @@ public class FuncionarioControllers {
 		
 	
 	
-	public List<Funcionario> buscarPorNome(String nome) {
+	public static List<Funcionario> buscarPorNome(String nome) {
 		String sql = "select funcionarios.id, funcionarios.nome, funcionarios.cpf, funcionarios.data_contratacao, funcionarios.cargo, funcionarios.salario from funcionarios WHERE nome LIKE ? ORDER BY id ASC, nome ASC";
 		List<Funcionario> funcionarios = new ArrayList<Funcionario>();
 

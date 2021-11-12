@@ -22,17 +22,18 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 
-import Controller.ClienteControllers;
+import org.lavieri.modelutil.cep.WebServiceCep;
+
+import Controllres.ClienteControllers;
 import Model.Cliente;
 
 public class CadastrarCliente extends JFrame {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 5143955175625024092L;
 	private JPanel contentPane;
 	private JTextField textFieldNome;
@@ -41,9 +42,25 @@ public class CadastrarCliente extends JFrame {
 	private JTextField textFieldLogandouro;
 	private JTextField textFieldNumero;
 	private JTextField textFieldObservacao;
+	private JTextField textFieldEstado;
+	
+	private JTextField textFieldCEP;
+	private JTextField textFieldBairro;
 
 	
 	public static void main(String[] args) {
+		
+		try {
+			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+				if ("Nimbus".equals(info.getName())) {
+					UIManager.setLookAndFeel(info.getClassName());
+					break;
+				}
+			}
+		} catch (Exception e) {
+			// If Nimbus is not available, you can set the GUI to another look and feel.
+		}
+		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -288,52 +305,49 @@ public class CadastrarCliente extends JFrame {
 		
 		JLabel lblNewLabel_3_3_2 = new JLabel("Estado");
 		lblNewLabel_3_3_2.setFont(new Font("Trebuchet MS", Font.BOLD, 17));
-		lblNewLabel_3_3_2.setBounds(280, 395, 253, 20);
+		lblNewLabel_3_3_2.setBounds(280, 474, 253, 20);
 		contentPane.add(lblNewLabel_3_3_2);
 		
-		JComboBox<String> comboBoxEstado = new JComboBox<String>();
-		comboBoxEstado.setModel(new DefaultComboBoxModel<String>(new String[] {"AC", "AL", "AM", "AP", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO"}));
-		comboBoxEstado.setBounds(280, 426, 253, 30);
-		contentPane.add(comboBoxEstado);
-		
 		textFieldCidade = new JTextField();
+		textFieldCidade.setEditable(false);
 		textFieldCidade.setColumns(10);
-		textFieldCidade.setBounds(572, 426, 253, 30);
+		textFieldCidade.setBounds(572, 505, 253, 30);
 		contentPane.add(textFieldCidade);
 		
 		JLabel lblNewLabel_3_3_2_1 = new JLabel("Cidade");
 		lblNewLabel_3_3_2_1.setFont(new Font("Trebuchet MS", Font.BOLD, 17));
-		lblNewLabel_3_3_2_1.setBounds(572, 395, 253, 20);
+		lblNewLabel_3_3_2_1.setBounds(572, 474, 253, 20);
 		contentPane.add(lblNewLabel_3_3_2_1);
 		
 		textFieldLogandouro = new JTextField();
+		textFieldLogandouro.setEditable(false);
 		textFieldLogandouro.setColumns(10);
-		textFieldLogandouro.setBounds(862, 426, 253, 30);
+		textFieldLogandouro.setBounds(862, 505, 253, 30);
 		contentPane.add(textFieldLogandouro);
 		
 		JLabel lblNewLabel_3_3_2_1_1 = new JLabel("Longadouro");
 		lblNewLabel_3_3_2_1_1.setFont(new Font("Trebuchet MS", Font.BOLD, 17));
-		lblNewLabel_3_3_2_1_1.setBounds(862, 395, 253, 20);
+		lblNewLabel_3_3_2_1_1.setBounds(862, 474, 253, 20);
 		contentPane.add(lblNewLabel_3_3_2_1_1);
 		
 		textFieldNumero = new JTextField();
 		textFieldNumero.setColumns(10);
-		textFieldNumero.setBounds(1153, 426, 228, 30);
+		textFieldNumero.setBounds(1153, 505, 228, 30);
 		contentPane.add(textFieldNumero);
 		
 		JLabel lblNewLabel_3_3_2_1_1_1 = new JLabel("N\u00FAmero");
 		lblNewLabel_3_3_2_1_1_1.setFont(new Font("Trebuchet MS", Font.BOLD, 17));
-		lblNewLabel_3_3_2_1_1_1.setBounds(1153, 395, 228, 20);
+		lblNewLabel_3_3_2_1_1_1.setBounds(1153, 474, 228, 20);
 		contentPane.add(lblNewLabel_3_3_2_1_1_1);
 		
 		textFieldObservacao = new JTextField();
 		textFieldObservacao.setColumns(10);
-		textFieldObservacao.setBounds(280, 514, 1101, 148);
+		textFieldObservacao.setBounds(280, 592, 1101, 70);
 		contentPane.add(textFieldObservacao);
 		
 		JLabel lblNewLabel_3_3_2_2 = new JLabel("Observa\u00E7\u00F5es");
 		lblNewLabel_3_3_2_2.setFont(new Font("Trebuchet MS", Font.BOLD, 17));
-		lblNewLabel_3_3_2_2.setBounds(280, 483, 253, 20);
+		lblNewLabel_3_3_2_2.setBounds(280, 561, 253, 20);
 		contentPane.add(lblNewLabel_3_3_2_2);
 		
 		JButton btnNewButton = new JButton("Cadastrar");
@@ -354,7 +368,7 @@ public class CadastrarCliente extends JFrame {
 					JOptionPane.showMessageDialog(null, "Informe o Estado civil do cliente não pode ser Vazio !");
 				}else if (formattedTextFieldPhone.getText().isEmpty()) {
 					JOptionPane.showMessageDialog(null, "Informe o Número de contato do cliente não pode ser Vazio !");
-				}else if (comboBoxEstado.getSelectedItem() == null) {
+				}else if (textFieldEstado.getText().isBlank()) {
 					JOptionPane.showMessageDialog(null, "Informe o Estado do cliente não pode ser Vazio !");
 				}else if (textFieldCidade.getText().isEmpty()) {
 					JOptionPane.showMessageDialog(null, "Informe a Cidade do cliente não pode ser Vazio !");
@@ -366,24 +380,23 @@ public class CadastrarCliente extends JFrame {
 					
 					try {
 						
-						ClienteControllers dao = new ClienteControllers();
-						
 						Cliente cliente = new Cliente.ClienteBuilder()
 								.id(55).nome(textFieldNome.getText())
-								.cpf(formattedTextFieldCPF.getText())
+								.cpf((String) formattedTextFieldCPF.getValue())
 								.email(textFieldEmail.getText())
-								.nascimento(formattedTextFieldData.getText())
+								.nascimento((String) formattedTextFieldData.getValue())
 								.sexo(comboBoxSexo.getSelectedItem())
 								.estado_civil(comboBoxCivil.getSelectedItem())
-								.telefone(formattedTextFieldPhone.getText())
-								.estado(comboBoxEstado.getSelectedItem())
+								.telefone((String) formattedTextFieldPhone.getValue())
+								.CEP(textFieldCEP.getText())
+								.estado(textFieldEstado.getText())
 								.cidade(textFieldCidade.getText())
 								.longadouro(textFieldLogandouro.getText())
 								.numero(textFieldNumero.getText())
 								.observacao(textFieldObservacao.getText())
 								.criarCliente();
 						
-						dao.save(cliente);
+						 ClienteControllers.salvar(cliente);
 						JOptionPane.showMessageDialog(null, "Cliente "+textFieldNome.getText()+" Cadastrado com sucesso!");
 						
 						formattedTextFieldCPF.setText("");
@@ -404,11 +417,55 @@ public class CadastrarCliente extends JFrame {
 		contentPane.add(btnNewButton);
 		
 		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				 LimparCampos();
+			}
+		});
 		btnCancelar.setForeground(new Color(255, 255, 255));
 		btnCancelar.setFont(new Font("Trebuchet MS", Font.BOLD, 12));
 		btnCancelar.setBackground(new Color(255, 0, 0));
 		btnCancelar.setBounds(1083, 705, 132, 30);
 		contentPane.add(btnCancelar);
+		
+		JLabel lblNewLabel_3_3_2_1_2 = new JLabel("Cidade");
+		lblNewLabel_3_3_2_1_2.setFont(new Font("Trebuchet MS", Font.BOLD, 17));
+		lblNewLabel_3_3_2_1_2.setBounds(280, 389, 253, 20);
+		contentPane.add(lblNewLabel_3_3_2_1_2);
+		
+		JButton btnNewButton_1 = new JButton("Bucar por CEP");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				functionValidarCamposCEP();	
+			}
+		});
+		btnNewButton_1.setForeground(new Color(255, 255, 255));
+		btnNewButton_1.setFont(new Font("Tahoma", Font.BOLD, 12));
+		btnNewButton_1.setBackground(new Color(123, 104, 238));
+		btnNewButton_1.setBounds(543, 420, 124, 30);
+		contentPane.add(btnNewButton_1);
+		
+		textFieldEstado = new JTextField();
+		textFieldEstado.setEditable(false);
+		textFieldEstado.setColumns(10);
+		textFieldEstado.setBounds(280, 505, 253, 30);
+		contentPane.add(textFieldEstado);
+		
+		textFieldCEP = new JTextField();
+		textFieldCEP.setColumns(10);
+		textFieldCEP.setBounds(280, 420, 253, 30);
+		contentPane.add(textFieldCEP);
+		
+		textFieldBairro = new JTextField();
+		textFieldBairro.setEditable(false);
+		textFieldBairro.setColumns(10);
+		textFieldBairro.setBounds(1153, 420, 228, 30);
+		contentPane.add(textFieldBairro);
+		
+		JLabel lblNewLabel_3_3_2_1_1_1_1 = new JLabel("Bairro");
+		lblNewLabel_3_3_2_1_1_1_1.setFont(new Font("Trebuchet MS", Font.BOLD, 17));
+		lblNewLabel_3_3_2_1_1_1_1.setBounds(1153, 389, 228, 20);
+		contentPane.add(lblNewLabel_3_3_2_1_1_1_1);
 	
 	}
 	
@@ -417,9 +474,48 @@ public class CadastrarCliente extends JFrame {
 		textFieldNome.setText("");
 	    textFieldEmail.setText("");
 		 textFieldCidade.setText("");
+		 textFieldCEP.setText("");
 		 textFieldLogandouro.setText("");
+		 textFieldEstado.setText("");
 		 textFieldNumero.setText("");
 		textFieldObservacao.setText("");
+		textFieldBairro.setText("");
 		
+	}
+	
+	
+	public void functionValidarCamposCEP() {
+		if(textFieldCEP.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(null, "Informe o CEP do cliente não pode ser Vazio !");
+		}else {
+			String CEP = textFieldCEP.getText();
+			try {
+	
+				WebServiceCep webServiceCep = WebServiceCep.searchCep(CEP);
+				 
+				if(webServiceCep.wasSuccessful()) {
+					textFieldBairro.setText(webServiceCep.getBairro().toString());
+					textFieldEstado.setText(webServiceCep.getUf().toString());
+					 textFieldLogandouro.setText(webServiceCep.getLogradouroFull().toString());
+					 textFieldCidade.setText(webServiceCep.getCidade().toString());
+					 
+					 System.out.println("Cep: "+webServiceCep.getCep());
+						System.out.println("Logradouro: "+webServiceCep.getLogradouroFull());
+						System.out.println("Bairro: "+webServiceCep.getBairro());
+						System.out.println("Cidade: "+
+								webServiceCep.getCidade()+"/"+ webServiceCep.getUf());
+				
+				}else {
+					System.out.println("Erro número: " + webServiceCep.getResulCode());
+					System.out.println("Descrição do erro: " + webServiceCep.getResultText());
+				}
+				 
+				 System.out.println();
+				 
+				
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
 	}
 }

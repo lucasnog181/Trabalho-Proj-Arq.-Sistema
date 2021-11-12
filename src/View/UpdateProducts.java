@@ -20,8 +20,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-
-import Controller.ProdutoControllers;
+import Controllres.ProdutoControllers;
 import Model.Produto;
 
 public class UpdateProducts extends JFrame {
@@ -310,6 +309,20 @@ public void preencheDados(String string1, String string2, String string3, String
 		contentPane.add(btnCancelar);
 	}
 	
+	
+	public void atualizar() {
+
+		Produto produto = new Produto.ProdutoBuilder()
+				.codigo_produto(Integer.parseInt(textFieldCodigoProduto.getText()))
+				.nome_produto(textFieldNome.getText()).valor_produto(textFieldValorProduto.getText())
+				.tipo_produto(textFieldTipoValor.getText()).descricao_produto("").criarProduto();
+
+		ProdutoControllers.atualizar(produto);
+		JOptionPane.showMessageDialog(null, "Produto atualizado com sucessso!");
+
+		limparCampos();
+	}
+
 	public void limparCampos() {
 		textFieldCodigoProduto.setText("");
 		textFieldDescricao.setText("");
@@ -317,27 +330,4 @@ public void preencheDados(String string1, String string2, String string3, String
 		textFieldTipoValor.setText("");
 		textFieldValorProduto.setText("");
 	}
-	
-	
-	public void atualizar() {
-		
-			ProdutoControllers dao = new ProdutoControllers();
-			Produto produto = new Produto.ProdutoBuilder()
-					.codigo_produto(Integer.parseInt(textFieldCodigoProduto.getText()))
-					.nome_produto(textFieldNome.getText())
-					.valor_produto(textFieldValorProduto.getText())
-					.tipo_produto(textFieldTipoValor.getText())
-					.descricao_produto("")
-					.criarProduto();
-			
-			dao.update(produto);
-			JOptionPane.showMessageDialog(null, "Produto atualizado com sucessso!");
-			
-			limparCampos();
-			
-	
-	}
-	
-	
-	
 }

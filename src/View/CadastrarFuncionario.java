@@ -23,7 +23,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 
-import Controller.FuncionarioControllers;
+import Controllres.FuncionariosControllers;
 import Model.Funcionario;
 
 public class CadastrarFuncionario extends JFrame {
@@ -268,8 +268,6 @@ public class CadastrarFuncionario extends JFrame {
 				}else {
 					try {
 						
-						FuncionarioControllers funcionarioControllers = new FuncionarioControllers();
-						
 						Funcionario funcionario = new Funcionario.FuncionarioBuilder()
 								.nome(textFieldNome.getText())
 								.cpf(formattedTextFieldCPF.getText())
@@ -278,7 +276,7 @@ public class CadastrarFuncionario extends JFrame {
 								.cargo(comboBoxCargo.getSelectedItem())
 								.criarFuncionario();
 						
-						         funcionarioControllers.save(funcionario);
+						         FuncionariosControllers.salvar(funcionario);
 						         
 						         JOptionPane.showMessageDialog(null, "Funcionario "+textFieldNome.getText()+" Cadastrado com sucesso!");
 						

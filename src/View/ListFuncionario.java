@@ -23,7 +23,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import Controller.FuncionarioControllers;
+import Controllres.FuncionariosControllers;
 import Model.Funcionario;
 
 public class ListFuncionario extends JFrame {
@@ -332,17 +332,15 @@ public class ListFuncionario extends JFrame {
 	
 	
 	public void LoadDataTable() {
-		FuncionarioControllers funcControllers = new FuncionarioControllers();
-		
 		try {
 			@SuppressWarnings("unused")
-			List<Funcionario> lista = funcControllers.getFuncionario();
+			List<Funcionario> lista = FuncionariosControllers.procurar("");
 			DefaultTableModel model = (DefaultTableModel) table.getModel();
 			if(model.getRowCount() > 0) {
 				model.setRowCount(0);
 			}
 			
-			for(Funcionario f: funcControllers.getFuncionario()) {
+			for(Funcionario f: FuncionariosControllers.procurar("")) {
 				Object [] object = new Object[6];
 				object[0] = f.getId();
 				object[1] = f.getNome();
@@ -361,38 +359,23 @@ public class ListFuncionario extends JFrame {
 	
 	
 	public void delete() {
-		FuncionarioControllers dao = new FuncionarioControllers();
-		
-		
-		Funcionario funcionario = new Funcionario.FuncionarioBuilder()
-				.nome("")
-				.cpf("702.665.520-56")
-				.data_contratacao("")
-				.salario("")
-				.cargo("")
-				.criarFuncionario();
-		
-		funcionario.setId((int) table.getValueAt(table.getSelectedRow(), 0));
-		dao.delete(funcionario.getId());
-		
+		 int id =  (int) table.getValueAt(table.getSelectedRow(), 0);
+		 FuncionariosControllers.excluir(id);
 		LoadDataTable();
-		
-
 	}
 	
 	
 	public void SearchName(String nome) {
-		FuncionarioControllers dao = new FuncionarioControllers();
 		try {
 			
 			@SuppressWarnings("unused")
-			List<Funcionario> lista = dao.getFuncionario();
+			List<Funcionario> lista = FuncionariosControllers.procurar("");
 			DefaultTableModel model = (DefaultTableModel) table.getModel();
 			if(model.getRowCount() > 0) {
 				model.setRowCount(0);
 			}
 			
-			for(Funcionario f : dao.buscarPorNome(nome)) {
+			for(Funcionario f : FuncionariosControllers.procurar(nome)) {
 				Object [] object = new Object[6];
 				object[0] = f.getId();
 				object[1] = f.getNome();

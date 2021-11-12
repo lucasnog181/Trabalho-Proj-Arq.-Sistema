@@ -16,8 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-
-import Controller.FuncionarioControllers;
+import Controllres.FuncionariosControllers;
 import Model.Funcionario;
 
 import javax.swing.JButton;
@@ -339,9 +338,6 @@ public void preencheDados(String string1, String string2, String string3, String
 		
 	}
 		
-
-		
-	
 	public void limparCampos() {
 		textFieldID.setText("");
 		textFieldNome.setText("");
@@ -352,23 +348,15 @@ public void preencheDados(String string1, String string2, String string3, String
 	}
 
 	public void atualizar() {
-		
-	FuncionarioControllers dao = new FuncionarioControllers();
-		
-		Funcionario funcionario = new Funcionario.FuncionarioBuilder()
-				.id(Integer.parseInt(textFieldID.getText()))
-				.nome(textFieldNome.getText())
-				.cpf(textFieldCPF.getText())
-				.data_contratacao(textFieldData.getText())
-				.salario(textFieldSalario.getText())
-				.cargo(textFieldCargo.getText())
-				.criarFuncionario();
-		
-		        dao.update(funcionario);
-		         
-		         limparCampos();
-		
+
+		Funcionario funcionario = new Funcionario.FuncionarioBuilder().id(Integer.parseInt(textFieldID.getText()))
+				.nome(textFieldNome.getText()).cpf(textFieldCPF.getText()).data_contratacao(textFieldData.getText())
+				.salario(textFieldSalario.getText()).cargo(textFieldCargo.getText()).criarFuncionario();
+
+		FuncionariosControllers.atualizar(funcionario);
+
+		limparCampos();
+
 	}
-	
-	
+
 }

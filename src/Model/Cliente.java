@@ -9,6 +9,7 @@ public class Cliente {
 	private Object sexo;
 	private Object estado_civil;
 	private String telefone;
+	private String CEP;
 	private Object estado;
 	private String cidade;
 	private String longadouro;
@@ -17,7 +18,7 @@ public class Cliente {
 	
 
 	private Cliente(int id, String nome, String cpf, String email, String nascimento, Object sexo, Object estado_civil,
-			String telefone, Object estado, String cidade, String longadouro, String numero, String observacao) {
+			String telefone,  String CEP, Object estado, String cidade, String longadouro, String numero, String observacao) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -27,6 +28,7 @@ public class Cliente {
 		this.sexo = sexo;
 		this.estado_civil = estado_civil;
 		this.telefone = telefone;
+		this.CEP = CEP;
 		this.estado = estado;
 		this.cidade = cidade;
 		this.longadouro = longadouro;
@@ -45,6 +47,7 @@ public class Cliente {
 		private Object sexo;
 		private Object estado_civil;
 		private String telefone;
+		private String CEP;
 		private Object estado;
 		private String cidade;
 		private String longadouro;
@@ -73,6 +76,12 @@ public class Cliente {
 			this.nascimento = nascimento;
 			return this;
 		}
+		
+		public ClienteBuilder CEP(String cep) {
+			this.CEP = cep;
+			return this;
+		}
+		
 		public ClienteBuilder sexo(Object object) {
 			this.sexo = object;
 			return this;
@@ -108,7 +117,7 @@ public class Cliente {
 		}
 		
 		public Cliente criarCliente() {
-			return new Cliente( id, nome, cpf, email,nascimento,  sexo,  estado_civil,telefone, estado, cidade, longadouro, numero, observacao);
+			return new Cliente( id, nome, cpf, email,nascimento,  sexo,  estado_civil,telefone, CEP, estado, cidade, longadouro, numero, observacao);
 		}
 		
 	}
@@ -216,6 +225,14 @@ public class Cliente {
 
 	public void setObservacao(String observacao) {
 		this.observacao = observacao;
+	}
+
+	public String getCEP() {
+		return CEP;
+	}
+
+	public void setCEP(String cEP) {
+		CEP = cEP;
 	}
 
 }

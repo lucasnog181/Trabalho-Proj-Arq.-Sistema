@@ -1,4 +1,4 @@
-package Controller;
+package DAO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,12 +6,12 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import Connection.SingletonConnection;
+import Database.SingletonConnection;
 import Model.Produto;
 
-public class ProdutoControllers {
+public class ProdutoDAO {
 
-	public void save(Produto produto) {
+	public static void save(Produto produto) {
 
 		String sql = "INSERT INTO Produtos ( Nome_produto, Descricao_produto , Tipo_produto , Valor_produto) VALUES (?,?,?,?)";
 		Connection connection = null;
@@ -45,7 +45,7 @@ public class ProdutoControllers {
 
 	}
 
-	public List<Produto> getProdutos() {
+	public static List<Produto> getProdutos() {
 
 		String sql = "select produtos.Codigo_produto, produtos.Nome_produto, produtos.Descricao_produto, produtos.Tipo_produto, produtos.Valor_produto from produtos ORDER BY Codigo_produto ASC, Nome_produto ASC";
 
@@ -91,7 +91,7 @@ public class ProdutoControllers {
 
 	}
 
-	public void update(Produto produto) {
+	public static void update(Produto produto) {
 
 		String sql = "UPDATE Produtos SET Nome_produto=?, Descricao_produto=?, Tipo_produto=?, Valor_produto=? WHERE Codigo_produto=?";
 
@@ -129,7 +129,7 @@ public class ProdutoControllers {
 		}
 	}
 
-	public void delete(int Codigo_produto) {
+	public static void delete(int Codigo_produto) {
 
 		String sql = "DELETE FROM Produtos WHERE Codigo_produto=?";
 
@@ -163,7 +163,7 @@ public class ProdutoControllers {
 	}
 	
 	
-	public List<Produto> buscarPorNome(String NomeProduto) {
+	public static List<Produto> buscarPorNome(String NomeProduto) {
 		String sql = "SELECT produtos.Codigo_produto, produtos.Nome_produto, produtos.Tipo_produto, produtos.Valor_produto from Produtos WHERE Nome_produto LIKE ?";
 		List<Produto> produtos = new ArrayList<Produto>();
 
